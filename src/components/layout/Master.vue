@@ -3,6 +3,7 @@
         <md-app>
             <md-app-toolbar class="md-accent">
                 <span class="md-title">Let's Play!</span>
+                <span>{{ user.username }}</span>
             </md-app-toolbar>
       <md-app-content>
             <router-view></router-view>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
 
     export default {
         data() {
@@ -25,6 +27,9 @@
                 newPosts: 3
             }
         },
+        computed: mapState({
+                user: 'user'
+        }),
         methods: {
             checkNewPosts(){
 
