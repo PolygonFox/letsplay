@@ -8,7 +8,7 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /\.scss$/,
+            test: /\.(scss|css)$/,
             use: [{
                 loader: "style-loader" // creates style nodes from JS strings
             }, {
@@ -24,13 +24,23 @@ module.exports = {
         },
         {
             test: /\.vue$/,
-            use: ['vue-loader']
-        }]
+            loader: 'vue-loader',
+            options: {
+              loaders: {
+                // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+                // the "scss" and "sass" values for the lang attribute to the right configs here.
+                // other preprocessors should work out of the box, no loader config like this nessessary.
+                'scss': 'vue-style-loader!css-loader!sass-loader',
+                'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+              }
+              // other vue-loader options go here
+            }
+          }]
     },
     resolve: {
         extensions: [".js", ".json", ".vue"],
         alias: {
-          vue: 'vue/dist/vue.js'
+          vue: 'vue/dist/vue.js',
         }
     }
 }
